@@ -14,20 +14,25 @@
 				_.forEach(methodSync, function (method) {
 					Toastbread.addEventListener(method, function () {
 						var args = Array.prototype.slice.call(arguments);
-						GSMP.socket.emit('method', {'name': method, 'arguments': args});
+						that.socket.emit('method', {'name': method, 'arguments': args});
 					});
 				});
 				
+				this.socket.on('method', function (data) {
+					console.log(data);
+				});
 				this.UI.init();
 			},
 			
 			createSession: function () {
 				this.socket.emit('createSession', '', function (sessionId) {
 					this.sessionId = sessionId;
+					console.log(sessionId);
 				});
 			},
 			joinSession: function(sessionId) {
 				this.sessionId = sessionId;
+				console.log(sessionId);
 				this.socket.emit('joinSession', {'sessionId': sessionId});
 			}
 		}
