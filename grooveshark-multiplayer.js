@@ -54,8 +54,8 @@
 							html += '<strong>Grooveshark Multiplayer</strong><br /><br />';
 
 							html += '<div id="gsmp-create-session" style="'+button+'">Create session</div>';
-							html += '<input type="text" id="" name="" value="" style="'+input+'"/>';
-							html += '<div style="'+button+'">Join session</div>';
+							html += '<input type="text" id="gsmp-join-session-id" name="" value="" style="'+input+'"/>';
+							html += '<div id="gsmp-join-session" style="'+button+'">Join session</div>';
 						html += '</div>';
 						
 						$('#footer').append(html);
