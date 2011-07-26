@@ -45,28 +45,15 @@
 					},
 					build: function() {
 						var html = '', 
-						button = 'background-color: #aaa; border: 1px solid #333; padding: 5px 10px; cursor: pointer;',
-						input = 'padding: 5px 10px; border: 1px solid #333;';
+						button = 'background-color: #aaa; border: 1px solid #333; padding: 5px 10px; cursor: pointer; margin: 0px 0px 10px 0px;',
+						input = 'padding: 5px 10px; border: 1px solid #333; margin: 0px 0px 10px 0px;';
 
 						html += '<div style="position: absolute; width: 280px; height: 130px; top: -150px; right: 0; padding: 10px; background-color: #eee; border: 1px solid #aaa; color: #000;">';
 							html += '<strong>Grooveshark Multiplayer</strong><br /><br />';
 
-							html += '<table style="width: 100%;" cellpadding="5">';
-								html += '<tr>';
-									html += '<td></td>';
-									html += '<td>';
-										html += '<div style="'+button+'">Create session</div>';
-									html += '</td>';
-								html += '</tr>';
-								html += '<tr>';
-									html += '<td>';
-										html += '<input type="text" id="" name="" value="" style="'+input+'"/>';
-									html += '</td>';
-									html += '<td>';
-										html += '<div style="'+button+'">Join session</div>';
-									html += '</td>';
-								html += '</tr>';
-							html += '</table>';
+							html += '<div style="'+button+'">Create session</div>';
+							html += '<input type="text" id="" name="" value="" style="'+input+'"/>';
+							html += '<div style="'+button+'">Join session</div>';
 						html += '</div>';
 						
 						$('#footer').append(html);
