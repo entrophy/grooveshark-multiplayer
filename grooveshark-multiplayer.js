@@ -108,6 +108,10 @@
 							});
 
 							$('#gsmp-dropdown-box, #gsmp-header-button').click(function(e) {
+								$('#dropdown_loginForm_box, #userSelectOptions').hide();
+								$('#header_login, #header_account_button').removeClass('active');
+
+								
 								e.stopPropagation();
 							});
 							
