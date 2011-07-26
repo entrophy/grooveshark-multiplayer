@@ -3,20 +3,32 @@
 		var GSMP = {
 			mode: 'sync',
 			socket: Object,
+			sessionId: '',
 			init: function() {
+				var that = this;
 				console.log('Grooveshark Multiplayer loaded');
 
-				console.log(window);
-				
-				GSMP.socket = new io.connect('http://192.168.1.16:8080/gsmp');
+				this.socket = new io.connect('http://192.168.1.16:8080/gsmp');
 
-				Toastbread.onSetVolume(function(volume) {
-					console.log("GSMP registed volume change to"+volume);
-
-					GSMP.socket.emit('method', { 'volume': volume });
+				var methodSync = ["setVolume", "setShuffle", "setRepeat"];
+				_.forEach(methodSync, function (method) {
+					Toastbread.addEventListener(method, function () {
+						var args = Array.prototype.slice.call(arguments);
+						GSMP.socket.emit('method', {'name': method, 'arguments': args});
+					});
 				});
-
+				
 				this.UI.init();
+			},
+			
+			createSession: function () {
+				this.socket.emit('createSession', '', function (sessionId) {
+					this.sessionId = sessionId;
+				});
+			},
+			joinSession: function(sessionId) {
+				this.sessionId = sessionId;
+				this.socket.emit('joinSession', {'sessionId': sessionId});
 			},
 			UI: {
 				init: function() {
@@ -27,15 +39,29 @@
 						this.build();
 					},
 					build: function() {
-						var html = '', button = 'background-color: #aaa; border: 1px solid #333; float: left; padding: 5px 10px;';
+						var html = '', 
+						button = 'background-color: #aaa; border: 1px solid #333; padding: 5px 10px; cursor: pointer;',
+						input = 'padding: 5px 10px; border: 1px solid #333;';
 
 						html += '<div style="position: absolute; width: 280px; height: 130px; top: -150px; right: 0; padding: 10px; background-color: #eee; border: 1px solid #aaa; color: #000;">';
 							html += '<strong>Grooveshark Multiplayer</strong><br /><br />';
-							html += '<div style="'+button+'">Create session</div><br /><br />';
 
-							
-							html += '<div style="'+button+'">Join session</div><br /><br />';
-							
+							html += '<table style="width: 100%;" cellpadding="5">';
+								html += '<tr>';
+									html += '<td></td>';
+									html += '<td>';
+										html += '<div style="'+button+'">Create session</div>';
+									html += '</td>';
+								html += '</tr>';
+								html += '<tr>';
+									html += '<td>';
+										html += '<input type="text" id="" name="" value="" style="'+input+'"/>';
+									html += '</td>';
+									html += '<td>';
+										html += '<div style="'+button+'">Join session</div>';
+									html += '</td>';
+								html += '</tr>';
+							html += '</table>';
 						html += '</div>';
 						
 						$('#footer').append(html);
@@ -47,7 +73,7 @@
 		setTimeout(function() {
 			window.Grooveshark.Multiplayer = GSMP;
 			GSMP.init();
-		}, 500);
+		}, 1000);
 	} else {
 		console.log("Grooveshark Multiplayer is dependent on Toastbread (Grooveshark Javascript API Extension)");
 	}	
