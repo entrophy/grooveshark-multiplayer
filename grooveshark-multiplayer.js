@@ -81,24 +81,15 @@
 					build: function() {
 						var html = '';
 
-						html += '<li id="header-gsmp-group" class="btn_group">';
-							html += '<button id="header-gsmp-button" class="btn btn_style1 btn_style1_selectbox account dropdownButton">';
-
+						html += '<li sid="header-gsmp-group" class="btn_group">';
+							html += '<button id="header-gsmp-button" class="btn btn_style1 btn_style1_selectbox account dropdownButton" type="button">';
+								html += '<div>';
+									html += '<span class="label">GSMP</span>';
+								html += '</div>';
 							html += '</button>';
 						html += '</li>';
 
-						/*
-						html += '<li class="last">';
-							html += '<div class="btn btn_style1">';
-								html += '<a href="#" id="gsmp-box-toggle">';
-									html += '<span class="label profile">GSMP</span>';
-								html += '</a>';
-							html += '</div>';
-						html += '</li>';
-						*/
-
 						$('#userOptions').append(html);
-						console.log("what");
 					}
 				}
 			}
