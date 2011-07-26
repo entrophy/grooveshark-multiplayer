@@ -32,7 +32,7 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 			var sync = sessionClients(client.gsmp.sessionId, client.id);
 			if (sync.length) {
 				for (x in sync) {
-					io.sockets.socket(sync[x]).emit('method', data);
+					io.sockets.socket(sync[x]).emit('methodSync', data);
 				}
 			}
 		}
