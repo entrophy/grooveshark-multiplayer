@@ -41,7 +41,7 @@
 					setTimeout(function() {
 						that.Box.init();
 						that.Toolbar.init();
-					}, 5000);
+					}, 3000);
 				},
 				Box: {
 					init: function() {
@@ -90,6 +90,21 @@
 									html += '<span class="label">GSMP</span>';
 								html += '</div>';
 							html += '</button>';
+
+							html += '<div class="dropdown right">';
+								html += '<ul class="dropdownOptions">';
+									html += '<li class="option">';
+										html += '<a href="#">';
+											html += '<span>Create Session</span>';
+										html += '</a>';
+									html += '</li>';
+									html += '<li class="option">';
+										html += '<a href="#">';
+											html += '<span>Join Session</span>';
+										html += '</a>';
+									html += '</li>';
+								html += '</ul>';
+							html += '</div>';
 						html += '</li>';
 
 						$('#userOptions').append(html);
