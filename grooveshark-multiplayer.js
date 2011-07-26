@@ -54,8 +54,8 @@
 							html += '<strong>Grooveshark Multiplayer</strong><br /><br />';
 
 							html += '<div id="gsmp-create-session" style="'+button+'">Create session</div>';
-							html += '<input type="text" id="" name="" value="" style="'+input+'"/>';
-							html += '<div style="'+button+'">Join session</div>';
+							html += '<input type="text" id="gsmp-join-session-id" name="" value="" style="'+input+'"/>';
+							html += '<div id="gsmp-join-session" style="'+button+'">Join session</div>';
 						html += '</div>';
 						
 						$('#footer').append(html);
@@ -65,6 +65,11 @@
 							$('#gsmp-create-session').click(function() {
 								window.Grooveshark.Multiplayer.createSession();
 								console.log("create session clicked");
+							});
+
+							$('#gsmp-join-session').click(function() {
+								window.Grooveshark.Multiplayer.joinSession($('#gsmp-join-session-id').val());
+								console.log("join session clicked");
 							});
 						}, 1000);
 					}
