@@ -18,8 +18,10 @@
 					});
 				});
 				
-				this.socket.on('method', function (data) {
-					console.log(data);
+				this.socket.on('connect', function () {
+					that.socket.on('method', function (data) {
+						console.log(data);
+					});
 				});
 				this.UI.init();
 			},
@@ -27,12 +29,10 @@
 			createSession: function () {
 				this.socket.emit('createSession', '', function (sessionId) {
 					this.sessionId = sessionId;
-					console.log(sessionId);
 				});
 			},
 			joinSession: function(sessionId) {
 				this.sessionId = sessionId;
-				console.log(sessionId);
 				this.socket.emit('joinSession', {'sessionId': sessionId});
 			},
 			UI: {
