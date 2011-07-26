@@ -8,7 +8,7 @@
 				var that = this;
 				console.log('Grooveshark Multiplayer loaded');
 
-				this.socket = new io.connect('http://192.168.1.16:8080/gsmp');
+				this.socket = io.connect('http://192.168.1.16:8080/gsmp');
 
 				var methodSync = ["setVolume", "setShuffle", "setRepeat"];
 				_.forEach(methodSync, function (method) {
