@@ -37,11 +37,13 @@
 			},
 			UI: {
 				init: function() {
-					this.Controls.init();
+					this.Box.init();
+					this.Toolbar.init();
 				},
-				Controls: {
+				Box: {
 					init: function() {
 						this.build();
+						this.events();
 					},
 					build: function() {
 						var html = '', 
@@ -51,12 +53,40 @@
 						html += '<div style="position: absolute; width: 280px; height: 130px; top: -150px; right: 0; padding: 10px; background-color: #eee; border: 1px solid #aaa; color: #000;">';
 							html += '<strong>Grooveshark Multiplayer</strong><br /><br />';
 
-							html += '<div style="'+button+'">Create session</div>';
+							html += '<div id="gsmp-create-session" style="'+button+'">Create session</div>';
 							html += '<input type="text" id="" name="" value="" style="'+input+'"/>';
 							html += '<div style="'+button+'">Join session</div>';
 						html += '</div>';
 						
 						$('#footer').append(html);
+					},
+					events: function() {
+						setTimeout(function() {
+							$('#gsmp-create-session').click(function() {
+								window.Grooveshark.Multiplayer.createSession();
+								console.log("create session clicked");
+							});
+						}, 1000);
+					}
+				},
+				Toolbar: {
+					init: function() {
+						this.build();
+					},
+					build: function() {
+						var html = '';
+
+						html += '<li class="last">';
+							html += '<div class="btn btn_style1">';
+								html += '<a href="#" id="gsmp-box-toggle">';
+									
+								html += '</a>';
+							html += '</div>';
+						html += '</li>';
+
+						
+
+						$('#userOptions').append(html);
 					}
 				}
 			}
