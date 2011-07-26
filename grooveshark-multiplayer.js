@@ -89,9 +89,8 @@
 							html += '</div>';
 						html += '</li>';
 
-						
-
 						$('#userOptions').append(html);
+						console.log("what");
 					}
 				}
 			}
