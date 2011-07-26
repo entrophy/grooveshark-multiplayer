@@ -29,10 +29,10 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 		console.log(client.gsmp.sessionId);
 		
 		if (client.gsmp.sessionId) {
-			var synch = sessionClients(client.gsmp.sessionId, client.id);
-			if (synch.length) {
-				for (x in synch) {
-					io.clients[synch[x]].emit('method', data);
+			var sync = sessionClients(client.gsmp.sessionId, client.id);
+			if (sync.length) {
+				for (x in sync) {
+					io.sockets.socket(sync[x]).emit('method', data);
 				}
 			}
 		}
