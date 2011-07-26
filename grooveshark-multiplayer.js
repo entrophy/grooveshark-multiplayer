@@ -56,7 +56,6 @@
 						html += '<div style="position: absolute; width: 280px; height: 130px; top: -150px; right: 0; padding: 10px; background-color: #eee; border: 1px solid #aaa; color: #000;">';
 							html += '<strong>Grooveshark Multiplayer</strong><br /><br />';
 
-							html += '<div id="gsmp-create-session" style="'+button+'">Create session</div>';
 							html += '<input type="text" id="gsmp-join-session-id" name="" value="" style="'+input+'"/>';
 							html += '<div id="gsmp-join-session" style="'+button+'">Join session</div>';
 						html += '</div>';
@@ -65,11 +64,6 @@
 					},
 					events: function() {
 						setTimeout(function() {
-							$('#gsmp-create-session').click(function() {
-								window.Grooveshark.Multiplayer.createSession();
-								console.log("create session clicked");
-							});
-
 							$('#gsmp-join-session').click(function() {
 								window.Grooveshark.Multiplayer.joinSession($('#gsmp-join-session-id').val());
 								console.log("join session clicked");
@@ -95,7 +89,7 @@
 							html += '<div id="gsmp-dropdown" class="dropdown right" style="position: absolute; top: 21px; right: 0; z-index: 9999; left: auto; min-width: 125%;">';
 								html += '<ul class="dropdownOptions" style="padding-top: 5px; -webkit-border-radius: 3px 0px 3px 3px; -moz-border-radius: 3px 0px 3px 3px; border-radius: 3px 0px 3px 3px;">';
 									html += '<li class="option">';
-										html += '<a href="#">';
+										html += '<a id="gsmp-create-session" href="#">';
 											html += '<span>Create Session</span>';
 										html += '</a>';
 									html += '</li>';
@@ -114,6 +108,10 @@
 						setTimeout(function() {
 							$('#header-gsmp-button').click(function() {
 								$('#gsmp-dropdown').toggle();
+							});
+
+							$('#gsmp-create-session').click(function() {
+								window.Grooveshark.Multiplayer.createSession();
 							});
 						}, 1000);
 					}
