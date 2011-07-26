@@ -82,19 +82,20 @@
 				Toolbar: {
 					init: function() {
 						this.build();
+						this.events();
 					},
 					build: function() {
 						var html = '';
 
-						html += '<li sid="header-gsmp-group" class="btn_group">';
+						html += '<li id="header-gsmp-group" class="btn_group">';
 							html += '<button id="header-gsmp-button" class="btn btn_style1 btn_style1_selectbox account dropdownButton" type="button">';
 								html += '<div>';
 									html += '<span class="label">GSMP</span>';
 								html += '</div>';
 							html += '</button>';
 
-							html += '<div class="dropdown right">';
-								html += '<ul class="dropdownOptions">';
+							html += '<div id="gsmp-dropdown" class="dropdown right" style="position: absolute; top: 21px; right: 0; z-index: 9999; left: auto; min-width: 125%;">';
+								html += '<ul class="dropdownOptions" style="padding-top: 5px; -webkit-border-radius: 3px 0px 3px 3px; -moz-border-radius: 3px 0px 3px 3px; border-radius: 3px 0px 3px 3px;">';
 									html += '<li class="option">';
 										html += '<a href="#">';
 											html += '<span>Create Session</span>';
@@ -110,6 +111,13 @@
 						html += '</li>';
 
 						$('#userOptions').append(html);
+					},
+					events: function() {
+						setTimeout(function() {
+							$('#header-gsmp-button').click(function() {
+								$('#gsmp-dropdown').toggle();
+							});
+						}, 1000);
 					}
 				}
 			}
