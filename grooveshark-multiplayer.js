@@ -93,7 +93,7 @@
 
 										html += '<div id="gsmp-dropdown-links" style="display: block; margin: 0; border: 1px solid #d9d9d9; border-top: 0; backgroud-color: #ebebeb;">';
 											html += '<ul style="padding: 8px 10px;">';
-												html += '<li style="display: inline; float: none; background: url("images/bullet_seperator.png") no-repeat right 6px; margin: 0px 4px 0px 0px; padding: 0px 12px 0px 0px;"><a href="#" style="font-size: 11px;">Grooveshark Multiplayer</a></li>';
+												html += '<li style="display: inline; float: none; background: url(\'images/bullet_seperator.png\') no-repeat right 6px; margin: 0px 4px 0px 0px; padding: 0px 12px 0px 0px;"><a href="#" style="font-size: 11px;">Grooveshark Multiplayer</a></li>';
 												html += '<li style="display: inline; float: none; background: none; margin: 0; padding: 0;"><a href="#" style="font-size: 11px;">Din mor!</a></li>';
 											html += '</ul>';
 										html += '<div class="clear"></div></div>';
