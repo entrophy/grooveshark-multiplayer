@@ -32,7 +32,7 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 			var sync = sessionClients(client.gsmp.sessionId, client.id);
 			if (sync.length) {
 				for (x in sync) {
-					io.sockets.socket(sync[x]).emit('methodSync', data);
+					gsmp.socket(sync[x]).emit('methodSync', data);
 				}
 			}
 		}
@@ -44,7 +44,6 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 		
 		sessions[sessionId] = [client.id];
 
-		client.emit("test", "test");
 		callback(sessionId);
 	});
 	
