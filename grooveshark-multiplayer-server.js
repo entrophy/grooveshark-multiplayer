@@ -26,11 +26,14 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 
 	client.on('method', function(data) {
 		console.log(data);
+		console.log(client.gsmp.sessionId);
 		
-		var synch = sessionClients(client.gsmp.sessionId, client.id);
-		if (synch.length) {
-			for (x in synch) {
-				io.store.clients[synch[x]].emit('method', data);
+		if (client.gsmp.sessionId) {
+			var synch = sessionClients(client.gsmp.sessionId, client.id);
+			if (synch.length) {
+				for (x in synch) {
+					io.clients[synch[x]].emit('method', data);
+				}
 			}
 		}
 	});
