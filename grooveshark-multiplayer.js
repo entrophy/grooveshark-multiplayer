@@ -79,7 +79,7 @@
 						html += '<li class="last">';
 							html += '<div class="btn btn_style1">';
 								html += '<a href="#" id="gsmp-box-toggle">';
-									
+									html += '<span class="label profile">GSMP</span>';
 								html += '</a>';
 							html += '</div>';
 						html += '</li>';
