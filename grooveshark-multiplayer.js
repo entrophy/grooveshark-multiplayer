@@ -66,6 +66,11 @@
 								window.Grooveshark.Multiplayer.createSession();
 								console.log("create session clicked");
 							});
+
+							$('#gsmp-join-session').click(function() {
+								window.Grooveshark.Multiplayer.joinSession($('#gsmp-join-session-id').val());
+								console.log("join session clicked");
+							});
 						}, 1000);
 					}
 				},
