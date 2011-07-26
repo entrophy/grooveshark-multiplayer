@@ -46,7 +46,8 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 		callback(sessionId);
 	});
 	
-	client.on('joinSession', function(sessionId) {
+	client.on('joinSession', function(data) {
+		var sessionId = data.sessionId;
 		client.gsmp.sessionId = sessionId;
 		console.log(sessionId);
 		sessions[sessionId].push(client.id);
