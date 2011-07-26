@@ -12,7 +12,7 @@ var sessionClients = function (client) {
 		var _client = session[x];
 		
 		if (_client.id != client.id) {
-			_clients.push(_client);
+			_clients.push(_client.id);
 		}
 	}
 	
@@ -30,7 +30,7 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 		var synch = sessionClients(client);
 		if (synch.length) {
 			for (x in synch) {
-				synch[x].emit('method', data);
+				io.store.clients[synch[x]].emit('method', data);
 			}
 		}
 	});
@@ -40,7 +40,7 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 		client.gsmp.sessionId = sessionId;
 		
 		console.log(sessions);
-		sessions[sessionId] = [client];
+		sessions[sessionId] = [client.id];
 		console.log(sessions);
 		
 		callback(sessionId);
@@ -48,7 +48,7 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 	
 	client.on('joinSession', function(sessionId) {
 		client.gsmp.sessionId = sessionId;
-		sessions[sessionId].push(client);
+		sessions[sessionId].push(client.id);
 	});
 	
 	client.on('killSession', function() {
