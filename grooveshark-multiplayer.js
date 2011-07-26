@@ -38,37 +38,8 @@
 					var that = this;
 					
 					setTimeout(function() {
-						that.Box.init();
 						that.Toolbar.init();
-					}, 3000);
-				},
-				Box: {
-					init: function() {
-						this.build();
-						this.events();
-					},
-					build: function() {
-						var html = '', 
-						button = 'background-color: #aaa; border: 1px solid #333; padding: 5px 10px; cursor: pointer; margin: 0px 0px 10px 0px;',
-						input = 'padding: 5px 10px; border: 1px solid #333; margin: 0px 0px 10px 0px;';
-
-						html += '<div style="position: absolute; width: 280px; height: 130px; top: -150px; right: 0; padding: 10px; background-color: #eee; border: 1px solid #aaa; color: #000;">';
-							html += '<strong>Grooveshark Multiplayer</strong><br /><br />';
-
-							html += '<input type="text" id="gsmp-join-session-id" name="" value="" style="'+input+'"/>';
-							html += '<div id="gsmp-join-session" style="'+button+'">Join session</div>';
-						html += '</div>';
-						
-						$('#footer').append(html);
-					},
-					events: function() {
-						setTimeout(function() {
-							$('#gsmp-join-session').click(function() {
-								window.Grooveshark.Multiplayer.joinSession($('#gsmp-join-session-id').val());
-								console.log("join session clicked");
-							});
-						}, 1000);
-					}
+					}, 2000);
 				},
 				Toolbar: {
 					init: function() {
@@ -80,50 +51,50 @@
 
 						html += '<li id="gsmp-header" class="loginOption">';
 							html += '<a id="gsmp-header-button" class="btn btn_style1 btn_style1_selectbox login">';
-								html += '<div><span class="label">GSMP</span></div>';
+								html += '<div><span class="label">Multiplayer</span></div>';
 							html += '</a>';
 
 							html += '<div id="gsmp-dropdown-box" class="hide" style="position: absolute; top: 20px; width: 340px; z-index: 4500; right: 0;">';
-								html += '<div id="gsmp-dropdown-border" style="border: 1px solid #bfbfbf; -webkit-border-radius: 2px 0px 2px 2px; -moz-border-radius: 2px 0px 2px 2px; border-radius: 2px 0px 2px 2px;">';
+								html += '<div id="gsmp-dropdown-border" style="border: 1px solid rgba(0, 0, 0, .25); -webkit-border-radius: 2px 0px 2px 2px; -moz-border-radius: 2px 0px 2px 2px; border-radius: 2px 0px 2px 2px;">';
 									html += '<div id="gsmp-dropdown-wrapper" style="display: block; margin: 0; padding: 8px; background-color: #fff; -webkit-border-radius: 2px 0px 2px 2px; -moz-border-radius: 2px 0px 2px 2px; border-radius: 2px 0px 2px 2px;">';
 
-										html += '<form>';
+										html += '<div id="gsmp-dropdown-inner" style="display: block; margin: 0; padding: 10px; background-color: #f5f5f5; border: 1px solid #d9d9d9; width: auto;">';
+											html += '<ul>';
+												html += '<li style="float: none; margin: 0; padding: 0px 0px 13px 0px;">';
+													html += '<label for="gsmp-join-session-id" style="display: block; padding: 0px 0px 8px 0px; font-size: 12px; height: 12px; line-height: 1; color: #666;">Session ID</label>';
+													html += '<div class="input_wrapper">';
+														html += '<div class="cap">';
+															html += '<input type="text" id="gsmp-join-session-id" name="gsmp-join-session-id" value="" />';
+														html += '</div>';
+													html += '</div>';
+													html += '<div class="clear"></div>';
+												html += '</li>';
+												html += '<li style="float: none; margin: 0; padding: 0px 0px 13px 0px;">';
+													html += '<button id="gsmp-create-session" class="btn btn_style4">';
+														html += '<div>';
+															html += '<span>Create Session</span>';
+														html += '</div>';
+													html += '</button>';
 
-										html += '</form>';
-
-										html += '<div id="gsmp-dropdown-links" style="display: block; margin: 0; border: 1px solid #d9d9d9; border-top: 0; backgroud-color: #ebebeb;">';
-											html += '<ul style="padding: 8px 10px;">';
-												html += '<li style="display: inline; float: none; background: url(\'images/bullet_seperator.png\') no-repeat right 6px; margin: 0px 4px 0px 0px; padding: 0px 12px 0px 0px;"><a href="#" style="font-size: 11px;">Grooveshark Multiplayer</a></li>';
-												html += '<li style="display: inline; float: none; background: none; margin: 0; padding: 0;"><a href="#" style="font-size: 11px;">Din mor!</a></li>';
+													html += '<button id="gsmp-join-session" class="btn btn_style4" style="float: right;">';
+														html += '<div>';
+															html += '<span>Join Session</span>';
+														html += '</div>';
+													html += '</button>';
+													html += '<div class="clear"></div>';
+												html += '</li>';
 											html += '</ul>';
-										html += '<div class="clear"></div></div>';
+										html += '</div>';
+
+										html += '<div id="gsmp-dropdown-links" style="display: block; margin: 0; border: 1px solid #d9d9d9; border-top: 0; background-color: #ebebeb;">';
+											html += '<ul style="padding: 8px 10px;">';
+												html += '<li style="display: inline; float: none; background: url(\'http://static.a.gs-cdn.net/webincludes/css/images/bullet_seperator.png\') no-repeat right 6px; margin: 0px 6px 0px 0px; padding: 0px 12px 0px 0px;"><a href="#" style="font-size: 11px;">Grooveshark Multiplayer</a></li>';
+												html += '<li style="display: inline; float: none; background: none; margin: 0; padding: 0;"><a href="#" style="font-size: 11px;">Be Right Back, Its Uploading</a></li>';
+											html += '</ul>';
+											html += '<div class="clear"></div>';
+										html += '</div>';
 									html += '</div>';
 								html += '</div>';
-							html += '</div>';
-						html += '</li>';
-
-						// old stuff
-
-						html += '<li id="header-gsmp-group" class="btn_group">';
-							html += '<button id="header-gsmp-button" class="btn btn_style1 btn_style1_selectbox account dropdownButton" type="button">';
-								html += '<div>';
-									html += '<span class="label">GSMP</span>';
-								html += '</div>';
-							html += '</button>';
-
-							html += '<div id="gsmp-dropdown" class="dropdown right" style="position: absolute; top: 21px; right: 0; z-index: 9999; left: auto; min-width: 125%;">';
-								html += '<ul class="dropdownOptions" style="padding-top: 5px; -webkit-border-radius: 3px 0px 3px 3px; -moz-border-radius: 3px 0px 3px 3px; border-radius: 3px 0px 3px 3px;">';
-									html += '<li class="option">';
-										html += '<a id="gsmp-create-session" href="#">';
-											html += '<span>Create Session</span>';
-										html += '</a>';
-									html += '</li>';
-									html += '<li class="option">';
-										html += '<a href="#">';
-											html += '<span>Join Session</span>';
-										html += '</a>';
-									html += '</li>';
-								html += '</ul>';
 							html += '</div>';
 						html += '</li>';
 
@@ -131,17 +102,34 @@
 					},
 					events: function() {
 						setTimeout(function() {
-							$('#header-gsmp-button').click(function() {
-								$('#gsmp-dropdown').toggle();
+							$('html').click(function() {
+								$('#gsmp-dropdown-box').hide();
+								$('#gsmp-header-button').removeClass('active');
 							});
 
+							$('#gsmp-dropdown-box, #gsmp-header-button').click(function(e) {
+								e.stopPropagation();
+							});
+							
 							$('#gsmp-header-button').click(function() {
-								$('#gsmp-dropdown-box').toggle();
+								var dropdown = $('#gsmp-dropdown-box');
+								if (dropdown.css('display') === 'block') {
+									dropdown.hide();
+									$(this).removeClass('active'); 
+								} else {
+									dropdown.show();
+									$(this).addClass('active');
+								}
 							});
-
 
 							$('#gsmp-create-session').click(function() {
 								window.Grooveshark.Multiplayer.createSession();
+								console.log("gsmp-create-session");
+							});
+
+							$('#gsmp-join-session').click(function() {
+								window.Grooveshark.Multiplayer.joinSession($('#gsmp-join-session-id').val());
+								console.log("gsmp-join-session: "+$('#gsmp-join-session-id').val());
 							});
 						}, 1000);
 					}
