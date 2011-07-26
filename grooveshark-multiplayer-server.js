@@ -1,19 +1,13 @@
 require.paths.unshift('/usr/local/lib/node_modules');
 
-var http = require('http'),  
-    io = require('socket.io'), // for npm, otherwise use require('./path/to/socket.io') 
+var server = require('express').createServer(), socket = require('socket.io').listen(server);
 
-server = http.createServer(function(req, res){ 
- // your normal server code 
- res.writeHead(200, {'Content-Type': 'text/html'}); 
- res.end('<h1>Hello world</h1>'); 
+server.listen(8080);
+
+socket.on('connection', function(client) {
+	console.log("connection");
+
+	client.on('method', function(data) {
+		console.log(data);
+	});
 });
-server.listen(3000);
-  
-// socket.io 
-var socket = io.listen(server); 
-socket.on('connection', function(client){ 
-  // new client is here! 
-  client.on('message', function(){ console.log('message'); }) 
-  client.on('disconnect', function(){ console.log('disconnect'); }) 
-}); 
