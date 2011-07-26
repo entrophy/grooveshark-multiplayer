@@ -79,22 +79,22 @@
 						var html = '';
 
 						html += '<li id="gsmp-header" class="loginOption">';
-							html += '<a id="gsmp-header-button" class=btn btn_style1 btn_style1_selectbox login">';
+							html += '<a id="gsmp-header-button" class="btn btn_style1 btn_style1_selectbox login">';
 								html += '<div><span class="label">GSMP</span></div>';
 							html += '</a>';
 
 							html += '<div id="gsmp-dropdown-box" class="hide" style="position: absolute; top: 20px; width: 340px; z-index: 4500; right: 0;">';
 								html += '<div id="gsmp-dropdown-border" style="border: 1px solid #bfbfbf; -webkit-border-radius: 2px 0px 2px 2px; -moz-border-radius: 2px 0px 2px 2px; border-radius: 2px 0px 2px 2px;">';
-									html += '<div id="gsmp-dropdown-wrapper" style="display: block; margin: 0; padding: 8px; border-color: #fff; -webkit-border-radius: 2px 0px 2px 2px; -moz-border-radius: 2px 0px 2px 2px; border-radius: 2px 0px 2px 2px;">';
+									html += '<div id="gsmp-dropdown-wrapper" style="display: block; margin: 0; padding: 8px; background-color: #fff; -webkit-border-radius: 2px 0px 2px 2px; -moz-border-radius: 2px 0px 2px 2px; border-radius: 2px 0px 2px 2px;">';
 
 										html += '<form>';
 
 										html += '</form>';
 
 										html += '<div id="gsmp-dropdown-links" style="display: block; margin: 0; border: 1px solid #d9d9d9; border-top: 0; backgroud-color: #ebebeb;">';
-											html += '<ul>';
-												html += '<li><a href="#" style="font-size: 11px;">Grooveshark Multiplayer</a></li>';
-												html += '<li class="last"><a href="#" style="font-size: 11px;">Din mor!</a></li>';
+											html += '<ul style="padding: 8px 10px;">';
+												html += '<li style="display: inline; float: none; background: url("images/bullet_seperator.png") no-repeat right 6px; margin: 0px 4px 0px 0px; padding: 0px 12px 0px 0px;"><a href="#" style="font-size: 11px;">Grooveshark Multiplayer</a></li>';
+												html += '<li style="display: inline; float: none; background: none; margin: 0; padding: 0;"><a href="#" style="font-size: 11px;">Din mor!</a></li>';
 											html += '</ul>';
 										html += '<div class="clear"></div></div>';
 									html += '</div>';
@@ -134,6 +134,11 @@
 							$('#header-gsmp-button').click(function() {
 								$('#gsmp-dropdown').toggle();
 							});
+
+							$('#gsmp-header-button').click(function() {
+								$('#gsmp-dropdown-box').toggle();
+							});
+
 
 							$('#gsmp-create-session').click(function() {
 								window.Grooveshark.Multiplayer.createSession();
