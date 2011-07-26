@@ -79,6 +79,32 @@
 					build: function() {
 						var html = '';
 
+						html += '<li id="gsmp-header" class="loginOption">';
+							html += '<a id="gsmp-header-button" class=btn btn_style1 btn_style1_selectbox login">';
+								html += '<div><span class="label">GSMP</span></div>';
+							html += '</a>';
+
+							html += '<div id="gsmp-dropdown-box" class="hide" style="position: absolute; top: 20px; width: 340px; z-index: 4500; right: 0;">';
+								html += '<div id="gsmp-dropdown-border" style="border: 1px solid #bfbfbf; -webkit-border-radius: 2px 0px 2px 2px; -moz-border-radius: 2px 0px 2px 2px; border-radius: 2px 0px 2px 2px;">';
+									html += '<div id="gsmp-dropdown-wrapper" style="display: block; margin: 0; padding: 8px; border-color: #fff; -webkit-border-radius: 2px 0px 2px 2px; -moz-border-radius: 2px 0px 2px 2px; border-radius: 2px 0px 2px 2px;">';
+
+										html += '<form>';
+
+										html += '</form>';
+
+										html += '<div id="gsmp-dropdown-links" style="display: block; margin: 0; border: 1px solid #d9d9d9; border-top: 0; backgroud-color: #ebebeb;">';
+											html += '<ul>';
+												html += '<li><a href="#" style="font-size: 11px;">Grooveshark Multiplayer</a></li>';
+												html += '<li class="last"><a href="#" style="font-size: 11px;">Din mor!</a></li>';
+											html += '</ul>';
+										html += '<div class="clear"></div></div>';
+									html += '</div>';
+								html += '</div>';
+							html += '</div>';
+						html += '</li>';
+
+						// old stuff
+
 						html += '<li id="header-gsmp-group" class="btn_group">';
 							html += '<button id="header-gsmp-button" class="btn btn_style1 btn_style1_selectbox account dropdownButton" type="button">';
 								html += '<div>';
