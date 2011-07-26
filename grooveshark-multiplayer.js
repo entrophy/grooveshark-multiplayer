@@ -17,9 +17,7 @@
 						that.socket.emit('method', {'name': method, 'arguments': args});
 					});
 				});
-				this.socket.on('message', function (data) {
-					console.log(data);
-				});
+
 				this.socket.on('methodSync', function (data) {
 					console.log('methodSync');
 					console.log(data);
