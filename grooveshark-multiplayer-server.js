@@ -39,7 +39,9 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 		var sessionId = 'AD123-aAfx5-123asd';
 		client.gsmp.sessionId = sessionId;
 		
+		console.log(sessions);
 		sessions[sessionId] = [client];
+		console.log(sessions);
 		
 		callback(sessionId);
 	});
