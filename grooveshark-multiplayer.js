@@ -19,8 +19,7 @@
 				});
 
 				this.socket.on('methodSync', function (data) {
-					console.log('methodSync');
-					console.log(data);
+					Toastbread[data.name].apply(Toastbread[data.name], data.arguments);
 				});
 				this.UI.init();
 			},
