@@ -18,12 +18,9 @@
 					});
 				});
 				
-				this.socket.on('connect', function () {
-					console.log("mconnect");
-					that.socket.on('method', function (data) {
-						console.log("method");
-						console.log(data);
-					});
+				this.socket.on('methodSync', function (data) {
+					console.log('methodSync');
+					console.log(data);
 				});
 				this.UI.init();
 			},
