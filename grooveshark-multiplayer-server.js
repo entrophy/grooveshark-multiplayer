@@ -5,18 +5,18 @@ var app = require('express').createServer(), io = require('socket.io').listen(ap
 app.listen(8080);
 
 var sessions = {};
-var sessionClients = function (client) {
+var sessionClients = function (clientId) {
 	var session = sessions[client.gsmp.sessionId];
-	var _clients = [];
+	var clientsIds = [];
 	for (x in session) {
-		var _client = session[x];
+		var _clientId = session[x];
 		
-		if (_client.id != client.id) {
-			_clients.push(_client.id);
+		if (_clientId != clientId) {
+			clientsIds.push(_clientId);
 		}
 	}
 	
-	return _clients;
+	return clientsIds;
 }
 
 var gsmp = io.of('/gsmp').on('connection', function(client) {
