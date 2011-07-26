@@ -1,11 +1,5 @@
 (function () {
-	if (window.Toastbread) {
-		if (!window.io) {
-			var ioinclude;
-			(ioinclude=document.createElement('script')).src='http://cdn.socket.io/stable/socket.io.js';
-			document.body.appendChild(ioinclude);
-		}
-	
+	if (window.Toastbread) {	
 		var GSMP = {
 			mode: 'synch',
 			init: function() {
