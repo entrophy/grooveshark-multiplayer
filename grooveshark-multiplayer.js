@@ -15,6 +15,32 @@
 
 					GSMP.socket.emit('method', { 'volume': volume });
 				});
+
+				this.UI.init();
+			},
+			UI: {
+				init: function() {
+					this.Controls.init();
+				},
+				Controls: {
+					init: function() {
+						this.build();
+					},
+					build: function() {
+						var html = '', button = 'background-color: #aaa; border: 1px solid #333; float: left; padding: 5px 10px;';
+
+						html += '<div style="position: absolute; width: 280px; height: 130px; top: -150px; right: 0; padding: 10px; background-color: #eee; border: 1px solid #aaa; color: #000;">';
+							html += '<strong>Grooveshark Multiplayer</strong><br /><br />';
+							html += '<div style="'+button+'">Create session</div><br /><br />';
+
+							
+							html += '<div style="'+button+'">Join session</div><br /><br />';
+							
+						html += '</div>';
+						
+						$('#footer').append(html);
+					}
+				}
 			}
 		}
 
