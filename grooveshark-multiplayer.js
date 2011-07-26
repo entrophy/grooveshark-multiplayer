@@ -37,8 +37,12 @@
 			},
 			UI: {
 				init: function() {
-					this.Box.init();
-					this.Toolbar.init();
+					var that = this;
+					
+					setTimeout(function() {
+						that.Box.init();
+						that.Toolbar.init();
+					}, 5000);
 				},
 				Box: {
 					init: function() {
