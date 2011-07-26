@@ -30,7 +30,7 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 		var synch = sessionClients(client.gsmp.sessionId, client.id);
 		if (synch.length) {
 			for (x in synch) {
-				io.store.clients[synch[x]].emit('method', data);
+				io.clients[synch[x]].emit('method', data);
 			}
 		}
 	});
