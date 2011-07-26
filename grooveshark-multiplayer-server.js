@@ -9,7 +9,7 @@ var sessionClients = function (clientId) {
 	var session = sessions[client.gsmp.sessionId];
 	var clientsIds = [];
 	for (x in session) {
-		var _clientId = session[x];
+		var _clientId = session[x]; 
 		
 		if (_clientId != clientId) {
 			clientsIds.push(_clientId);
@@ -48,6 +48,7 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 	
 	client.on('joinSession', function(sessionId) {
 		client.gsmp.sessionId = sessionId;
+		console.log(sessionId);
 		sessions[sessionId].push(client.id);
 	});
 	
