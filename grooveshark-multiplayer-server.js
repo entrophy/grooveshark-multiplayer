@@ -50,6 +50,10 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 		sessions[sessionId].push(client.id);
 	});
 	
+	client.on('leaveSession', function() {
+	
+	});
+	
 	client.on('killSession', function() {
 		delete sessions[client.gsmp.sessionId];
 	});

@@ -41,9 +41,12 @@
 				});
 
 				this.socket.on('methodSync', function (data) {
-					console.log(data);
 					if (data.namespace && data.namespace != '') {
-						Toastbread[data.namespace][data.name].apply(Toastbread[data.namespace], data.arguments);
+						if (data.arguments.length) {
+							Toastbread[data.namespace][data.name].apply(Toastbread[data.namespace], data.arguments);
+						} else {
+							Toastbread[data.namespace][data.name].call(Toastbread[data.namespace]);
+						}
 					} else {
 						Toastbread[data.name].apply(Toastbread, data.arguments);
 					}
