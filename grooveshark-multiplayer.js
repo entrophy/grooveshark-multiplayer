@@ -10,7 +10,7 @@
 
 				this.socket = io.connect('http://192.168.1.10:8080/gsmp');
 
-				var methodSync = ["setVolume", "setShuffle", "setRepeat"];
+				var methodSync = ["setVolume", "setShuffle", "setRepeat", "setIsMuted", "next", "previous"];
 				_.forEach(methodSync, function (method) {
 					Toastbread.addEventListener(method, function () {
 						var args = Array.prototype.slice.call(arguments);
