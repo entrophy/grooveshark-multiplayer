@@ -8,7 +8,7 @@
 				var that = this;
 				console.log('Grooveshark Multiplayer loaded');
 
-				this.socket = io.connect('http://192.168.1.16:8080/gsmp');
+				this.socket = io.connect('http://192.168.1.10:8080/gsmp');
 
 				var methodSync = ["setVolume", "setShuffle", "setRepeat"];
 				_.forEach(methodSync, function (method) {
@@ -21,6 +21,14 @@
 				this.socket.on('methodSync', function (data) {
 					Toastbread[data.name].apply(Toastbread[data.name], data.arguments);
 				});
+				
+				Toastbread.Queue.addEventListener('addSong', function (songs, playOnAdd, position, index) {
+					console.log(songs);
+					console.log(playOnAdd);
+					console.log(position);
+					console.log(index);
+				});
+				
 				this.UI.init();
 			},
 			
