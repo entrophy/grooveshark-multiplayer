@@ -14,9 +14,13 @@
 					"setVolume", 
 					"setShuffle", 
 					"setRepeat",
+					"setIsMuted",
+					"next",
+					"previous",
 					
 					"queue_addSongs"
 				];
+
 				_.forEach(methodSync, function (method) {
 					(function (method) {	
 						Toastbread.addEventListener(method, function () {
