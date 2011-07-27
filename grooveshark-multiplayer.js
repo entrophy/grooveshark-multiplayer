@@ -10,24 +10,43 @@
 
 				this.socket = io.connect('http://192.168.1.10:8080/gsmp');
 
-				var methodSync = ["setVolume", "setShuffle", "setRepeat"];
+				var methodSync = [
+					"setVolume", 
+					"setShuffle", 
+					"setRepeat",
+					
+					"queue_addSongs"
+				];
 				_.forEach(methodSync, function (method) {
-					Toastbread.addEventListener(method, function () {
-						var args = Array.prototype.slice.call(arguments);
-						that.socket.emit('method', {'name': method, 'arguments': args});
-					});
+					(function (method) {	
+						Toastbread.addEventListener(method, function () {
+							var args = Array.prototype.slice.call(arguments);
+							var namespace = '';
+							var methodName = method;
+						
+							if (method.search('_') != -1) {
+								methodName = method.split('_');
+								namespace = methodName[0];
+								methodName = methodName[1];
+							}
+						
+							that.socket.emit('method', {'namespace': namespace, 'name': methodName, 'arguments': args});
+						});
+					})(method);
 				});
 
 				this.socket.on('methodSync', function (data) {
-					Toastbread[data.name].apply(Toastbread[data.name], data.arguments);
+					console.log(data);
+					if (data.namespace && data.namespace != '') {
+						Toastbread[data.namespace][data.name].apply(Toastbread[data.namespace], data.arguments);
+					} else {
+						Toastbread[data.name].apply(Toastbread, data.arguments);
+					}
 				});
 				
-				Toastbread.Queue.addEventListener('addSong', function (songs, playOnAdd, position, index) {
-					console.log(songs);
-					console.log(playOnAdd);
-					console.log(position);
-					console.log(index);
-				});
+				//Toastbread.Queue.addEventListener('addSongs', function (songs, playOnAdd, position, index) {
+				//	Toastbread.Queue.addSongs(songs, playOnAdd, position);
+				//});
 				
 				this.UI.init();
 			},

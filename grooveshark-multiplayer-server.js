@@ -25,9 +25,6 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 	}
 
 	client.on('method', function(data) {
-		console.log(data);
-		console.log(client.gsmp.sessionId);
-		
 		if (client.gsmp.sessionId) {
 			var sync = sessionClients(client.gsmp.sessionId, client.id);
 			if (sync.length) {
