@@ -18,7 +18,8 @@
 					"next",
 					"previous",
 					
-					"queue_addSongs"
+					"Queue_addSongs",
+					"Queue_clear"
 				];
 
 				_.forEach(methodSync, function (method) {
@@ -47,11 +48,6 @@
 						Toastbread[data.name].apply(Toastbread, data.arguments);
 					}
 				});
-				
-				//Toastbread.Queue.addEventListener('addSongs', function (songs, playOnAdd, position, index) {
-				//	Toastbread.Queue.addSongs(songs, playOnAdd, position);
-				//});
-				
 				this.UI.init();
 			},
 			
