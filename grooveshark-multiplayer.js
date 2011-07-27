@@ -17,6 +17,8 @@
 					"setIsMuted",
 					"next",
 					"previous",
+					"pause",
+					"play",
 					
 					"Queue_addSongs",
 					"Queue_clear"
@@ -94,7 +96,7 @@
 													html += '<label for="gsmp-join-session-id" style="display: block; padding: 0px 0px 8px 0px; font-size: 12px; height: 12px; line-height: 1; color: #666;">Session ID</label>';
 													html += '<div class="input_wrapper">';
 														html += '<div class="cap">';
-															html += '<input type="text" id="gsmp-join-session-id" name="gsmp-join-session-id" value="" />';
+															html += '<input type="text" id="gsmp-join-session-id" name="gsmp-join-session-id" value="AD123-aAfx5-123asd" />';
 														html += '</div>';
 													html += '</div>';
 													html += '<div class="clear"></div>';
@@ -141,7 +143,6 @@
 								$('#dropdown_loginForm_box, #userSelectOptions').hide();
 								$('#header_login, #header_account_button').removeClass('active');
 
-								
 								e.stopPropagation();
 							});
 							
@@ -158,11 +159,13 @@
 
 							$('#gsmp-create-session').click(function() {
 								window.Grooveshark.Multiplayer.createSession();
+								$('#gsmp-dropdown-box').hide();
 								console.log("gsmp-create-session");
 							});
 
 							$('#gsmp-join-session').click(function() {
 								window.Grooveshark.Multiplayer.joinSession($('#gsmp-join-session-id').val());
+								$('#gsmp-dropdown-box').hide();
 								console.log("gsmp-join-session: "+$('#gsmp-join-session-id').val());
 							});
 						}, 1000);
