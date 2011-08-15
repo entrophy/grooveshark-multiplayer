@@ -5,18 +5,24 @@ var app = require('express').createServer(), io = require('socket.io').listen(ap
 app.listen(8080);
 
 var sessions = {};
-var sessionClients = function (sessionId, clientId) {
-	var session = sessions[sessionId];
-	var clientsIds = [];
-	for (x in session) {
-		var _clientId = session[x]; 
+var sessionClients = function (sessionId, client, deviceType) {
+	var clients = sessions[sessionId]['clients'];
+	var _clients = [];
+	for (var x in clients) {
+		var _client = clients[x];
 		
-		if (_clientId != clientId) {
-			clientsIds.push(_clientId);
+		if (_client.id != client.id) {
+			if (deviceType) {
+				if (_client.deviceType == deviceType) {
+					_clients.push(_client);
+				}
+			} else {
+				_clients.push(_client);
+			}
 		}
 	}
 	
-	return clientsIds;
+	return _clients;
 }
 
 var gsmp = io.of('/gsmp').on('connection', function(client) {
@@ -26,28 +32,52 @@ var gsmp = io.of('/gsmp').on('connection', function(client) {
 
 	client.on('method', function(data) {
 		if (client.gsmp.sessionId) {
-			var sync = sessionClients(client.gsmp.sessionId, client.id);
-			if (sync.length) {
-				for (x in sync) {
-					gsmp.socket(sync[x]).emit('methodSync', data);
+			var clients = sessionClients(client.gsmp.sessionId, client);
+			if (clients.length) {
+				for (var x in clients) {
+					gsmp.socket(clients[x].id).emit('methodSync', data);
 				}
 			}
 		}
 	});
 	
-	client.on('createSession', function(empty, callback) {
+	client.on('createSession', function(data, callback) {
 		var sessionId = 'AD123-aAfx5-123asd';
 		client.gsmp.sessionId = sessionId;
+		client.deviceType = data.deviceType;
 		
-		sessions[sessionId] = [client.id];
+		sessions[sessionId] = { 'clients': [client], 'state': {} };
 
-		callback(sessionId);
+		callback(sessionId, client.id);
 	});
 	
-	client.on('joinSession', function(data) {
+	client.on('joinSession', function(data, callback) {
 		var sessionId = data.sessionId;
+		
 		client.gsmp.sessionId = sessionId;
-		sessions[sessionId].push(client.id);
+		client.deviceType = data.deviceType;
+
+		console.log(client.deviceType);
+		
+		sessions[sessionId]['clients'].push(client);
+
+		// find existing web client to synchronize new client with
+		var clients = sessionClients(client.gsmp.sessionId, client, 'web');
+		if (clients.length) {
+			var sender;
+			for (var x in clients) {
+				sender = clients[x]; break;
+			}
+			
+			gsmp.socket(sender.id).emit('sessionStateCrawl', client.id);
+		}
+
+		callback(sessionId, client.id);
+	});
+
+	client.on('crawlSession', function(data) {
+		console.log(data.data);
+		gsmp.socket(data.receiverId).emit('sessionStateSync', data.data);
 	});
 	
 	client.on('leaveSession', function() {

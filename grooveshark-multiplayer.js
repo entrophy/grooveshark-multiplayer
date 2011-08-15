@@ -8,7 +8,7 @@
 				var that = this;
 				console.log('Grooveshark Multiplayer loaded');
 
-				this.socket = io.connect('http://192.168.1.10:8080/gsmp');
+				this.socket = io.connect('http://192.168.0.13:8080/gsmp');
 
 				var methodSync = [
 					"setVolume", 
@@ -17,11 +17,15 @@
 					"setIsMuted",
 					"next",
 					"previous",
+					"setSeek",
 					"pause",
 					"play",
 					
 					"Queue_addSongs",
-					"Queue_clear"
+					"Queue_clear",
+					"Queue_setActiveSong",
+					"Queue_removeSongs",
+					"Queue_moveSongs"
 				];
 
 				_.forEach(methodSync, function (method) {
@@ -43,28 +47,77 @@
 				});
 
 				this.socket.on('methodSync', function (data) {
-					if (data.namespace && data.namespace != '') {
-						if (data.arguments.length) {
-							Toastbread[data.namespace][data.name].apply(Toastbread[data.namespace], data.arguments);
-						} else {
-							Toastbread[data.namespace][data.name].call(Toastbread[data.namespace]);
-						}
-					} else {
-						Toastbread[data.name].apply(Toastbread, data.arguments);
+					console.log("modtager signal fra server");
+					GSMP.methodSync(data);
+				});
+
+				this.socket.on('sessionStateSync', function(data) {
+					Toastbread.Notification.info('You are being synchronized');
+
+					Toastbread.Queue.clear();
+					for (var i = 0; i < data.length; i++) {
+						GSMP.methodSync(data[i]);
 					}
 				});
+
+				this.socket.on('sessionStateCrawl', function(receiverId) {
+					Toastbread.Notification.info('You are being crawled for: '+receiverId);
+
+					var data = [
+						{ 'namespace': '', 'name': 'setShuffle', 'arguments': [Toastbread.getShuffle()] },
+						{ 'namespace': '', 'name': 'setVolume', 'arguments': [Toastbread.getVolume()] },
+						{ 'namespace': '', 'name': 'setIsMuted', 'arguments': [Toastbread.getIsMuted()] },
+						{ 'namespace': '', 'name': 'setRepeat', 'arguments': [Toastbread.getRepeat()] },
+						
+						{ 'namespace': 'Queue', 'name': 'addSongs', 'arguments': [Toastbread.Queue.getSongs(), false, false] },
+						{ 'namespace': 'Queue', 'name': 'setActiveSong', 'arguments': [Toastbread.Queue.getActiveSong()] },
+						
+						{ 'namespace': '', 'name': 'play', 'arguments': [Toastbread.Queue.getActiveSong()], 'delay': 1000 },
+						{ 'namespace': '', 'name': 'setSeek', 'arguments': [Toastbread.getSeek() + 2000], 'delay': 2000 }
+					];
+
+					if (Toastbread.isPaused()) {
+						data.push({ 'namespace': '', 'name': 'pause', 'arguments': [], 'delay': 2250 });
+					}
+					console.log(data);
+					that.socket.emit('crawlSession', {'receiverId': receiverId, 'data': data});
+				});
+
 				this.UI.init();
+			},
+			methodSync: function(data) {
+				if (data.delay) {
+					setTimeout(function() {
+						GSMP.methodSyncExe(data);
+					}, data.delay);
+				} else {
+					GSMP.methodSyncExe(data);
+				}
+			},
+			methodSyncExe: function(data) {
+				if (data.namespace && data.namespace != '') {
+					if (data.arguments.length) {
+						Toastbread[data.namespace][data.name].apply(Toastbread[data.namespace], data.arguments);
+					} else {
+						Toastbread[data.namespace][data.name].call(Toastbread[data.namespace]);
+					}
+				} else {
+					Toastbread[data.name].apply(Toastbread, data.arguments);
+				}
 			},
 			
 			createSession: function () {
-				this.socket.emit('createSession', '', function (sessionId) {
-					this.sessionId = sessionId;
+				this.socket.emit('createSession', { 'deviceType': 'web' }, function (sessionId, clientId) {
+					console.log(clientId);
 				});
 			},
 			joinSession: function(sessionId) {
 				this.sessionId = sessionId;
-				this.socket.emit('joinSession', {'sessionId': sessionId});
+				this.socket.emit('joinSession', { 'sessionId': sessionId, 'deviceType': 'web' }, function(sessionId, clientId) {
+					console.log(clientId);
+				});
 			},
+			
 			UI: {
 				init: function() {
 					var that = this;
@@ -160,12 +213,14 @@
 							$('#gsmp-create-session').click(function() {
 								window.Grooveshark.Multiplayer.createSession();
 								$('#gsmp-dropdown-box').hide();
+								$('#gsmp-header-button').removeClass('active');
 								console.log("gsmp-create-session");
 							});
 
 							$('#gsmp-join-session').click(function() {
 								window.Grooveshark.Multiplayer.joinSession($('#gsmp-join-session-id').val());
 								$('#gsmp-dropdown-box').hide();
+								$('#gsmp-header-button').removeClass('active');
 								console.log("gsmp-join-session: "+$('#gsmp-join-session-id').val());
 							});
 						}, 1000);
