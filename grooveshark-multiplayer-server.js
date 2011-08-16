@@ -1,8 +1,10 @@
-require.paths.unshift('/usr/local/lib/node_modules');
+//require.paths.unshift('/usr/local/lib/node_modules');
+require.paths.unshift('/home/ubuntu/npm/node_modules'); // for server
 
 var app = require('express').createServer(), io = require('socket.io').listen(app);
 
-app.listen(8080);
+//app.listen(8080);
+app.listen(8124); // for server
 
 var sessions = {};
 var sessionClients = function (sessionId, client, deviceType) {
